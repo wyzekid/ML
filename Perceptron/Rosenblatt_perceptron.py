@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-
 def plot_decision_regions(X, y, clf, res=0.02):
 
     x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
@@ -43,24 +42,14 @@ class Perceptron(object):
         return np.dot(X, self.w_[1:]) + self.w_[0]
 
     def predict(self, X):
-        return np.where(self.net_input(X) >= 0.0, 1, 2)
-        print(np.where(self.net_input(X) >= 0.0, 1, -1))
+        return np.where(self.net_input(X) >= 0.0, 1, -1)
 
-# setosa and versicolor
-star_count = int(input('Enter number of stars: '))
-input_matrix = [[0]*3]*star_count
-X = []
-y = []
-for i in range(star_count):
-    input_matrix[i] = input().split()
-    X.append(input_matrix[i][:2])
-    y.append(input_matrix[i][2])
+# Корректные выходы перцептрона для данной выборки
+y = np.array([[1],[1],[1],[1],[-1],[-1],[-1],[-1]]).reshape(8,1)
 
-y = np.array(y, dtype=float).reshape(star_count, 1)
-X = np.array(X, dtype=float).reshape(star_count, 2)
-#map(lambda y: ['-1' if x == 1], y)
-print(X)
-print(y)
+# Массив входных данных для перцептрона
+X = np.array([[0,3],[1,2],[2,2],[4,0],[-1,2],[2,0],[3,-1],[4,-1]]).reshape(8,2)
+
 ppn = Perceptron(epochs=10, eta=0.1)
 
 ppn.train(X, y)
