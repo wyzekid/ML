@@ -79,31 +79,6 @@ for text in newsgroups_test.data:
 total_words = len(vocab)
 word2index = get_word_2_index(vocab)
 
-
-def get_batch(df, i, batch_size):
-    batches = []
-    results = []
-    texts = df.data[i * batch_size:i * batch_size + batch_size]
-    categories = df.target[i * batch_size:i * batch_size + batch_size]
-    for text in texts:
-        layer = np.zeros(total_words, dtype=float)
-        for word in text.split(' '):
-            layer[word2index[word.lower()]] += 1
-
-        batches.append(layer)
-
-    for category in categories:
-        y = np.zeros((3), dtype=float)
-        if category == 0:
-            y[0] = 1.
-        elif category == 1:
-            y[1] = 1.
-        else:
-            y[2] = 1.
-        results.append(y)
-
-    return np.array(batches), np.array(results)
-
 #Параметры нейронной сети
 learning_rate = 0.01
 training_epochs = 2
